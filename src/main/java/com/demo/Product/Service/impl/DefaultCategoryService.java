@@ -9,6 +9,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -22,12 +23,16 @@ public class DefaultCategoryService implements CategoryService {
         return getCategoryRepository().findAll();
     }
 
-    public Optional<CategoryModel> getCategoryById(long id){
-        return  getCategoryRepository().findById(id);
+    public CategoryModel getCategoryById(long id){
+        return  getCategoryRepository().findById(id).orElseThrow(()->new RuntimeException("Categoria no encontrada"));
     }
 
-    public CategoryModel createCategory(CategoryModel categoryModel){
-        return getCategoryRepository().save(categoryModel);
+    public List<CategoryModel> createCategory(List<CategoryModel> categoryModel){
+        List<CategoryModel> createdCategories = new ArrayList<>();
+        for (CategoryModel category : categoryModel){
+            createdCategories.add(getCategoryRepository().save(category));
+        }
+        return createdCategories;
     }
 
     public Optional<CategoryModel> updateCategory(long id){
@@ -47,6 +52,12 @@ public class DefaultCategoryService implements CategoryService {
             return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
 
+    }
+
+    @Override
+    public ResponseEntity<Void> deleteCategory() {
+        getCategoryRepository().deleteAll();
+        return ResponseEntity.noContent().build();
     }
 
     public CategoryRepository getCategoryRepository() {

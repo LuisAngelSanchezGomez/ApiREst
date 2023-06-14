@@ -26,12 +26,12 @@ public class CategoryController {
     }
 
     @GetMapping("/{categoryId}")
-    public Optional<CategoryModel> getCategoryById(@PathVariable Long id){
-        return getCategoryService().getCategoryById(id);
+    public CategoryModel getCategoryById(@PathVariable Long categoryId){
+        return getCategoryService().getCategoryById(categoryId);
     }
 
     @PostMapping
-    public ResponseEntity createCategory(@RequestBody CategoryModel categories){
+    public ResponseEntity createCategory(@RequestBody List<CategoryModel> categories){
         try {
             getCategoryService().createCategory(categories);
             return ResponseEntity.ok(categories);
@@ -59,8 +59,12 @@ public class CategoryController {
     }
 
     @DeleteMapping("/{categoryId}")
-    public  ResponseEntity<Void> deleteCategory(@PathVariable long id){
-        return getCategoryService().deleteCategoryById(id);
+    public  ResponseEntity<Void> deleteCategoryById(@PathVariable long categoryId){
+        return getCategoryService().deleteCategoryById(categoryId);
+    }
+    @DeleteMapping()
+    public  ResponseEntity<Void> deleteAllCategories(){
+        return getCategoryService().deleteCategory();
     }
 
     public DefaultCategoryService getCategoryService() {

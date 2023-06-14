@@ -9,7 +9,7 @@ import java.util.Optional;
 
 public interface SubcategoryService {
 
-    public List<SubcategoryModel> createSubcategory(List<SubcategoryModel> subcategoryModel);
+    public List<SubcategoryModel> createSubcategories(List<SubcategoryModel> subcategories);
     public Optional<SubcategoryModel> updateSubcategory(long id);
     public List<SubcategoryModel> getAllSubcategories();
     public Optional<SubcategoryModel> getSubcategoryById(long id);

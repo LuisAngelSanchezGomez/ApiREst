@@ -44,12 +44,12 @@ public class DefaultProductService implements ProductService {
         return getProductRepository().findByInventoryBetween(min,max);
     }
 
-    public List<ProductModel> getProductsByCategoryAndSubcategory(long categoryId, long subcategoryId){
+   /* public List<ProductModel> getProductsByCategoryAndSubcategory(long categoryId, long subcategoryId){
         Optional<CategoryModel> category = getCategoryService().getCategoryById(categoryId);
         Optional<SubcategoryModel> subcategoryModel = getSubcategoryService().getSubcategoryById(subcategoryId);
 
         return getProductRepository().findByCategoryAndSubcategoryId(category.get(),subcategoryModel.get());
-    }
+    }*/
     public ProductRepository getProductRepository() {
         return productRepository;
     }

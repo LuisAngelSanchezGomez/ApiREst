@@ -16,5 +16,5 @@ public interface ProductService {
 
     public List<ProductModel> getProductByCategoryId(long id);
     public List<ProductModel> getProductByInventoryRange(int min, int max);
-    public List<ProductModel> getProductsByCategoryAndSubcategory(long categoryId, long subcategoryId);
+    /*public List<ProductModel> getProductsByCategoryAndSubcategory(long categoryId, long subcategoryId);*/
 }

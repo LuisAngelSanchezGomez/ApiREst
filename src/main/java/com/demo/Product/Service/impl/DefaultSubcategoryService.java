@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
@@ -23,8 +24,17 @@ public class DefaultSubcategoryService implements SubcategoryService {
          return getSubcategoryRepository().findById(id);
     }
 
-    public List<SubcategoryModel> createSubcategory(List<SubcategoryModel> subcategoryModel){
-        return getSubcategoryRepository().saveAll(subcategoryModel);
+    public SubcategoryModel createSubcategory(SubcategoryModel subcategoryModel){
+        return getSubcategoryRepository().save(subcategoryModel);
+    }
+
+    @Override
+    public List<SubcategoryModel> createSubcategories(List<SubcategoryModel> subcategories) {
+        List<SubcategoryModel> createdSubcategories = new ArrayList<>();
+        for (SubcategoryModel subcategory : subcategories){
+            createdSubcategories.add(createSubcategory(subcategory));
+        }
+        return createdSubcategories;
     }
 
     public Optional<SubcategoryModel> updateSubcategory(long id){

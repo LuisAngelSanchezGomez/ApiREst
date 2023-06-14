@@ -8,14 +8,16 @@ import java.util.List;
 import java.util.Optional;
 
 public interface CategoryService {
-    public CategoryModel createCategory(CategoryModel categoryModel);
+    public List<CategoryModel> createCategory(List<CategoryModel> categoryModel);
     public Optional<CategoryModel> updateCategory(long id);
 
     public ResponseEntity<Void> deleteCategoryById(long id);
+    public ResponseEntity<Void> deleteCategory();
+
 
     public List<CategoryModel> getAllCategories();
 
-    public Optional<CategoryModel> getCategoryById(long id);
+    public CategoryModel getCategoryById(long id);
 
 
 

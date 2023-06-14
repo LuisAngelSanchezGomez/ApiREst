@@ -32,7 +32,7 @@ public class SubcategoryController {
 
     @PostMapping
     public void createSubcategory(@RequestBody List<SubcategoryModel> subcategoryModel){
-        getSubcategoryService().createSubcategory(subcategoryModel);
+        getSubcategoryService().createSubcategories(subcategoryModel);
     }
 
     @PutMapping("/{subcategoryId}")

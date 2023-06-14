@@ -74,12 +74,12 @@ public class ProductController {
         return getProductService().getProductByInventoryRange(min,max);
     }
 
-    @GetMapping("/categorias/{categoryId}/subcategorias/{subcategoryId}")
+    /*@GetMapping("/categorias/{categoryId}/subcategorias/{subcategoryId}")
     public List<ProductModel> getProductsByCategoryAndSubcategory(@PathVariable Long categoryId, @PathVariable Long subcategoryId) {
 
         return getProductService().getProductsByCategoryAndSubcategory(categoryId,subcategoryId);
     }
-
+*/
     public DefaultProductService getProductService() {
         return productService;
     }
