@@ -16,15 +16,15 @@ public class DefaultSubcategoryService implements SubcategoryService {
     @Autowired
     private SubcategoryRepository subcategoryRepository;
 
-    public List<SubcategoryModel> getSubcategories(){
+    public List<SubcategoryModel> getAllSubcategories(){
         return getSubcategoryRepository().findAll();
     }
     public Optional<SubcategoryModel> getSubcategoryById(long id){
          return getSubcategoryRepository().findById(id);
     }
 
-    public void createSubcategory(List<SubcategoryModel> subcategoryModel){
-        getSubcategoryRepository().saveAll(subcategoryModel);
+    public List<SubcategoryModel> createSubcategory(List<SubcategoryModel> subcategoryModel){
+        return getSubcategoryRepository().saveAll(subcategoryModel);
     }
 
     public Optional<SubcategoryModel> updateSubcategory(long id){

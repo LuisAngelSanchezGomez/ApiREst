@@ -18,7 +18,7 @@ public class DefaultCategoryService implements CategoryService {
     @Autowired
     private CategoryRepository categoryRepository;
 
-    public List<CategoryModel> getCategories(){
+    public List<CategoryModel> getAllCategories(){
         return getCategoryRepository().findAll();
     }
 
@@ -26,8 +26,8 @@ public class DefaultCategoryService implements CategoryService {
         return  getCategoryRepository().findById(id);
     }
 
-    public void createCategory(List<CategoryModel> categoryModel){
-        getCategoryRepository().saveAll(categoryModel);
+    public CategoryModel createCategory(CategoryModel categoryModel){
+        return getCategoryRepository().save(categoryModel);
     }
 
     public Optional<CategoryModel> updateCategory(long id){

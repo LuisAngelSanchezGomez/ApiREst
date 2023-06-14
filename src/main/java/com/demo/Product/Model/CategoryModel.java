@@ -2,21 +2,22 @@ package com.demo.Product.Model;
 
 import jakarta.persistence.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Entity
-@Table(name = "category")
+@Table(name = "categories")
 public class CategoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(name = "code", unique = true, nullable = false)
     private String code;
 
+    @Column(name = "name",nullable = false)
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL)
-    private List<SubcategoryModel> subcategories;
 
 
     public CategoryModel() {
@@ -37,14 +38,6 @@ public class CategoryModel {
 
     public void setName(String name) {
         this.name = name;
-    }
-
-    public List<SubcategoryModel> getSubcategories() {
-        return subcategories;
-    }
-
-    public void setSubcategories(List<SubcategoryModel> subcategories) {
-        this.subcategories = subcategories;
     }
 
     public String getCode() {

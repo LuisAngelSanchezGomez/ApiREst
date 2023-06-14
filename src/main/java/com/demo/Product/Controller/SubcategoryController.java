@@ -22,10 +22,10 @@ public class SubcategoryController {
 
     @GetMapping
     public List<SubcategoryModel> getAllSubcategories() {
-        return getSubcategoryService().getSubcategories();
+        return getSubcategoryService().getAllSubcategories();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{subcategoryId}")
     public Optional<SubcategoryModel> getSubcategoryById(@PathVariable Long id){
         return getSubcategoryService().getSubcategoryById(id);
     }
@@ -35,7 +35,7 @@ public class SubcategoryController {
         getSubcategoryService().createSubcategory(subcategoryModel);
     }
 
-    @PutMapping("/{id}")
+    @PutMapping("/{subcategoryId}")
     public ResponseEntity<SubcategoryModel> updateSubcategory(@PathVariable Long id, @RequestBody SubcategoryModel subcategoryData){
         try {
             Optional<SubcategoryModel> optionalSubcategoryModel= getSubcategoryService().updateSubcategory(id);
@@ -53,7 +53,7 @@ public class SubcategoryController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{subcategoryId}")
     public  ResponseEntity<Void> deleteSubCategory(@PathVariable long id){
         return getSubcategoryService().deleteSubcategoryById(id);
     }

@@ -22,23 +22,28 @@ public class CategoryController {
 
     @GetMapping
     public List<CategoryModel> getAllCategories() {
-        return getCategoryService().getCategories();
+        return getCategoryService().getAllCategories();
     }
 
-    @GetMapping("/{id}")
+    @GetMapping("/{categoryId}")
     public Optional<CategoryModel> getCategoryById(@PathVariable Long id){
         return getCategoryService().getCategoryById(id);
     }
 
     @PostMapping
-    public void createCategory(@RequestBody List<CategoryModel> categories){
-        getCategoryService().createCategory(categories);
+    public ResponseEntity createCategory(@RequestBody CategoryModel categories){
+        try {
+            getCategoryService().createCategory(categories);
+            return ResponseEntity.ok(categories);
+        }catch (Exception e){
+            return ResponseEntity.noContent().build();
+        }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<CategoryModel> updateCategory(@PathVariable Long id, @RequestBody CategoryModel categoryData){
+    @PutMapping("/{categoryId}")
+    public ResponseEntity<CategoryModel> updateCategory(@PathVariable Long categoryId, @RequestBody CategoryModel categoryData){
         try {
-            Optional<CategoryModel> optionalCategoryModel= getCategoryService().updateCategory(id);
+            Optional<CategoryModel> optionalCategoryModel= getCategoryService().updateCategory(categoryId);
             if (optionalCategoryModel.isPresent()){
                 CategoryModel categoryModel = optionalCategoryModel.get();
                 categoryModel.setName(categoryData.getName());
@@ -53,7 +58,7 @@ public class CategoryController {
         }
     }
 
-    @DeleteMapping("/{id}")
+    @DeleteMapping("/{categoryId}")
     public  ResponseEntity<Void> deleteCategory(@PathVariable long id){
         return getCategoryService().deleteCategoryById(id);
     }
