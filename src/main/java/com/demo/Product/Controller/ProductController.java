@@ -1,11 +1,10 @@
 package com.demo.Product.Controller;
 
-import com.demo.Product.Model.CategoryModel;
 import com.demo.Product.Model.ProductModel;
 import com.demo.Product.Repository.ProductRepository;
-import com.demo.Product.Service.CategoryService;
-import com.demo.Product.Service.ProductService;
-import com.demo.Product.Service.SubcategoryService;
+import com.demo.Product.Service.impl.DefaultCategoryService;
+import com.demo.Product.Service.impl.DefaultProductService;
+import com.demo.Product.Service.impl.DefaultSubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,11 +18,11 @@ import java.util.Optional;
 public class ProductController {
 
     @Autowired
-    private ProductService productService;
+    private DefaultProductService productService;
     @Autowired
-    private CategoryService categoryService;
+    private DefaultCategoryService categoryService;
     @Autowired
-    private SubcategoryService subcategoryService;
+    private DefaultSubcategoryService subcategoryService;
     @Autowired
     private ProductRepository productRepository;
 
@@ -81,11 +80,11 @@ public class ProductController {
         return getProductService().getProductsByCategoryAndSubcategory(categoryId,subcategoryId);
     }
 
-    public ProductService getProductService() {
+    public DefaultProductService getProductService() {
         return productService;
     }
 
-    public void setProductService(ProductService productService) {
+    public void setProductService(DefaultProductService productService) {
         this.productService = productService;
     }
 

@@ -1,10 +1,9 @@
 package com.demo.Product.Controller;
 
 
-import com.demo.Product.Model.CategoryModel;
 import com.demo.Product.Model.SubcategoryModel;
 import com.demo.Product.Repository.SubcategoryRepository;
-import com.demo.Product.Service.SubcategoryService;
+import com.demo.Product.Service.impl.DefaultSubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -19,7 +18,7 @@ public class SubcategoryController {
     @Autowired
     private SubcategoryRepository subcategoryRepository;
     @Autowired
-    private SubcategoryService subcategoryService;
+    private DefaultSubcategoryService subcategoryService;
 
     @GetMapping
     public List<SubcategoryModel> getAllSubcategories() {
@@ -67,11 +66,11 @@ public class SubcategoryController {
         this.subcategoryRepository = subcategoryRepository;
     }
 
-    public SubcategoryService getSubcategoryService() {
+    public DefaultSubcategoryService getSubcategoryService() {
         return subcategoryService;
     }
 
-    public void setSubcategoryService(SubcategoryService subcategoryService) {
+    public void setSubcategoryService(DefaultSubcategoryService subcategoryService) {
         this.subcategoryService = subcategoryService;
     }
 }

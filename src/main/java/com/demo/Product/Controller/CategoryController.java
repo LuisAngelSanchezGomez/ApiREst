@@ -2,7 +2,7 @@ package com.demo.Product.Controller;
 
 import com.demo.Product.Model.CategoryModel;
 import com.demo.Product.Repository.CategoryRepository;
-import com.demo.Product.Service.CategoryService;
+import com.demo.Product.Service.impl.DefaultCategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -18,7 +18,7 @@ public class CategoryController {
     @Autowired
     private CategoryRepository categoryRepository;
     @Autowired
-    private CategoryService categoryService;
+    private DefaultCategoryService categoryService;
 
     @GetMapping
     public List<CategoryModel> getAllCategories() {
@@ -58,11 +58,11 @@ public class CategoryController {
         return getCategoryService().deleteCategoryById(id);
     }
 
-    public CategoryService getCategoryService() {
+    public DefaultCategoryService getCategoryService() {
         return categoryService;
     }
 
-    public void setCategoryService(CategoryService categoryService) {
+    public void setCategoryService(DefaultCategoryService categoryService) {
         this.categoryService = categoryService;
     }
 
