@@ -1,6 +1,8 @@
 package com.demo.Product.Controller;
 
+import com.demo.Product.Model.CategoryModel;
 import com.demo.Product.Model.ProductModel;
+import com.demo.Product.Model.SubcategoryModel;
 import com.demo.Product.Repository.ProductRepository;
 import com.demo.Product.Service.impl.DefaultCategoryService;
 import com.demo.Product.Service.impl.DefaultProductService;
@@ -56,14 +58,12 @@ public class ProductController {
     public void deleteProduct(@PathVariable Long id){
         getProductService().deleteProduct(id);
     }
+
+
     @GetMapping
-    public List<ProductModel> getProductsByCategoryAndSubcategoryOrAll(@RequestParam(required = false) String categoryCode,
-                                                             @RequestParam(required = false) String subcategoryCode) {
-        if (categoryCode != null && subcategoryCode != null) {
-            return getProductService().getProductsByCategoryAndSubcategory(categoryCode, subcategoryCode);
-        } else if (categoryCode != null) {
-            return getProductService().getProductsByCategory(categoryCode);
-        } else if (subcategoryCode != null) {
+    public List<ProductModel> getProductsByCategoryAndSubcategory(@RequestParam(required = false) String subcategoryCode) {
+
+        if (subcategoryCode != null) {
             return getProductService().getProductsBySubcategory(subcategoryCode);
         } else {
             return getProductService().getAllProducts();

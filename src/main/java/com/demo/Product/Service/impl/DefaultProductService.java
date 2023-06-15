@@ -77,7 +77,7 @@ public class DefaultProductService implements ProductService {
 
     }
 
-    @Override
+    /*@Override
     public List<ProductModel> getProductsByCategoryAndSubcategory(String categoryCode, String subcategoryCode) {
         return getProductRepository().findByCategoryCodeAndSubcategoryCode(categoryCode,subcategoryCode);
     }
@@ -85,7 +85,7 @@ public class DefaultProductService implements ProductService {
     @Override
     public List<ProductModel> getProductsByCategory(String categoryCode) {
         return getProductRepository().findByCategoryCode(categoryCode);
-    }
+    }*/
 
     @Override
     public List<ProductModel> getProductsBySubcategory(String subcategoryCode) {

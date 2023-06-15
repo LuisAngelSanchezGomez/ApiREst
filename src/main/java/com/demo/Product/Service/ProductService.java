@@ -18,9 +18,9 @@ public interface ProductService {
 
     public void deleteProduct(Long id) ;
 
-    public List<ProductModel> getProductsByCategoryAndSubcategory(String categoryCode, String subcategoryCode);
+   /* public List<ProductModel> getProductsByCategoryAndSubcategory(String categoryCode, String subcategoryCode);
 
-    public List<ProductModel> getProductsByCategory(String categoryCode) ;
+    public List<ProductModel> getProductsByCategory(String categoryCode) ;*/
     public List<ProductModel> getProductsBySubcategory(String subcategoryCode) ;
 
     public List<ProductModel> getProductsByInventoryRange(int minInventory, int maxInventory);
