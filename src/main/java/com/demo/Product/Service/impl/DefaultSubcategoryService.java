@@ -1,6 +1,8 @@
 package com.demo.Product.Service.impl;
 
+import com.demo.Product.Model.CategoryModel;
 import com.demo.Product.Model.SubcategoryModel;
+import com.demo.Product.Repository.CategoryRepository;
 import com.demo.Product.Repository.SubcategoryRepository;
 import com.demo.Product.Service.SubcategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,16 +18,14 @@ import java.util.Optional;
 public class DefaultSubcategoryService implements SubcategoryService {
     @Autowired
     private SubcategoryRepository subcategoryRepository;
+    @Autowired
+    private CategoryRepository categoryRepository;
 
     public List<SubcategoryModel> getAllSubcategories(){
         return getSubcategoryRepository().findAll();
     }
     public Optional<SubcategoryModel> getSubcategoryById(long id){
          return getSubcategoryRepository().findById(id);
-    }
-
-    public SubcategoryModel createSubcategory(SubcategoryModel subcategoryModel){
-        return getSubcategoryRepository().save(subcategoryModel);
     }
 
     @Override
@@ -35,6 +35,16 @@ public class DefaultSubcategoryService implements SubcategoryService {
             createdSubcategories.add(createSubcategory(subcategory));
         }
         return createdSubcategories;
+    }
+    public SubcategoryModel createSubcategory(SubcategoryModel subcategoryModel){
+        CategoryModel categoryModel = getCategoryRepository().findById(subcategoryModel.getCategory().getId())
+                .orElseThrow(()-> new IllegalArgumentException("El Id de Categoria es invalido"));
+        if (!categoryModel.getId().equals(subcategoryModel.getCategory().getId())){
+            throw new IllegalArgumentException("Id de Categoria no coincide");
+        }
+        SubcategoryModel createdSubcategory = getSubcategoryRepository().save(subcategoryModel);
+        System.out.println("Subcategoria creada "+ createdSubcategory);
+        return createdSubcategory;
     }
 
     public Optional<SubcategoryModel> updateSubcategory(long id){
@@ -62,5 +72,13 @@ public class DefaultSubcategoryService implements SubcategoryService {
 
     public void setSubcategoryRepository(SubcategoryRepository subcategoryRepository) {
         this.subcategoryRepository = subcategoryRepository;
+    }
+
+    public CategoryRepository getCategoryRepository() {
+        return categoryRepository;
+    }
+
+    public void setCategoryRepository(CategoryRepository categoryRepository) {
+        this.categoryRepository = categoryRepository;
     }
 }

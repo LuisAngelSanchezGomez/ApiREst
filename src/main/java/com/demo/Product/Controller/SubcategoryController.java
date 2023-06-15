@@ -31,8 +31,14 @@ public class SubcategoryController {
     }
 
     @PostMapping
-    public void createSubcategory(@RequestBody List<SubcategoryModel> subcategoryModel){
-        getSubcategoryService().createSubcategories(subcategoryModel);
+    public ResponseEntity createSubcategories(@RequestBody List<SubcategoryModel> subcategories){
+        try {
+            getSubcategoryService().createSubcategories(subcategories);
+            return ResponseEntity.ok(subcategories);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
+
     }
 
     @PutMapping("/{subcategoryId}")

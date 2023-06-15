@@ -1,6 +1,7 @@
 package com.demo.Product.Model;
 
 import jakarta.persistence.*;
+import org.antlr.v4.runtime.misc.NotNull;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -13,15 +14,22 @@ public class CategoryModel {
     private Long id;
 
     @Column(name = "code", unique = true, nullable = false)
+    @NotNull
     private String code;
 
-    @Column(name = "name",nullable = false)
+    @Column(name = "name", nullable = false)
+    @NotNull
     private String name;
 
-
+    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<SubcategoryModel> subcategories = new ArrayList<>();
 
     public CategoryModel() {
+    }
 
+    public CategoryModel(String code, String name) {
+        this.code = code;
+        this.name = name;
     }
 
     public Long getId() {
@@ -46,5 +54,23 @@ public class CategoryModel {
 
     public void setCode(String code) {
         this.code = code;
+    }
+
+    public List<SubcategoryModel> getSubcategories() {
+        return subcategories;
+    }
+
+    public void setSubcategories(List<SubcategoryModel> subcategories) {
+        this.subcategories = subcategories;
+    }
+
+    public void addSubcategory(SubcategoryModel subcategory) {
+        subcategory.setCategory(this);
+        subcategories.add(subcategory);
+    }
+
+    public void removeSubcategory(SubcategoryModel subcategory) {
+        subcategory.setCategory(null);
+        subcategories.remove(subcategory);
     }
 }

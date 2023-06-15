@@ -13,6 +13,5 @@ public interface ProductRepository extends JpaRepository<ProductModel, Long> {
     List<ProductModel> findByCategoryId(Long categoryId);
     List<ProductModel> findByInventoryBetween(Integer min, Integer max);
 
-    List<ProductModel> findByCategoryAndSubcategoryId(CategoryModel categoryId, SubcategoryModel subcategoryId);
 
 }

@@ -3,7 +3,7 @@ package com.demo.Product.Model;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "subcategory")
+@Table(name = "subcategories")
 public class SubcategoryModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
