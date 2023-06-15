@@ -11,8 +11,9 @@ import java.util.Optional;
 
 @Repository
 public interface ProductRepository extends JpaRepository<ProductModel, Long> {
-    List<ProductModel> findBySubcategory(SubcategoryModel subcategory);
-
+    List<ProductModel> findByCategoryCodeAndSubcategoryCode(String categoryCode, String subcategoryCode);
+    List<ProductModel> findByCategoryCode(String categoryCode);
+    List<ProductModel> findBySubcategoryCode(String subcategoryCode);
     List<ProductModel> findByInventoryBetween(Integer min, Integer max);
 
 }

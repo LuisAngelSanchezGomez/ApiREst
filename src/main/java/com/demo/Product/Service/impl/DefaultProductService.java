@@ -58,11 +58,14 @@ public class DefaultProductService implements ProductService {
 
     @Override
     public ProductModel updateProduct(Long id, ProductModel updatedProduct) {
+        String categoryCode = updatedProduct.getSubcategory().getCode();
+        SubcategoryModel subcategoryModel = getSubcategoryRepository().findByCode(categoryCode).orElseThrow(()->new
+                RuntimeException("Categoria no encontrada por cdigo"+ categoryCode));
         ProductModel productModel = getProductRepository().findById(id).orElseThrow(()->new RuntimeException("Producto no encontrado con ese codigo"));
         productModel.setSku(updatedProduct.getSku());
         productModel.setName(updatedProduct.getName());
         productModel.setMaterialNumber(updatedProduct.getMaterialNumber());
-        productModel.setSubcategory(updatedProduct.getSubcategory());
+        productModel.setSubcategory(subcategoryModel);
         productModel.setInventory(updatedProduct.getInventory());
 
         return getProductRepository().save(productModel);
@@ -73,6 +76,22 @@ public class DefaultProductService implements ProductService {
         getProductRepository().deleteById(id);
 
     }
+
+    @Override
+    public List<ProductModel> getProductsByCategoryAndSubcategory(String categoryCode, String subcategoryCode) {
+        return getProductRepository().findByCategoryCodeAndSubcategoryCode(categoryCode,subcategoryCode);
+    }
+
+    @Override
+    public List<ProductModel> getProductsByCategory(String categoryCode) {
+        return getProductRepository().findByCategoryCode(categoryCode);
+    }
+
+    @Override
+    public List<ProductModel> getProductsBySubcategory(String subcategoryCode) {
+        return getProductRepository().findBySubcategoryCode(subcategoryCode);
+    }
+
     public ProductRepository getProductRepository() {
         return productRepository;
     }

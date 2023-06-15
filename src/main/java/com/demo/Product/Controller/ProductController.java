@@ -36,11 +36,6 @@ public class ProductController {
         }
     }
 
-    @GetMapping
-    public List<ProductModel> getAllProducts() {
-        return getProductService().getAllProducts();
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<ProductModel> getProduct(@PathVariable Long id) {
         ProductModel product = getProductService().getProductById(id);
@@ -61,6 +56,20 @@ public class ProductController {
     public void deleteProduct(@PathVariable Long id){
         getProductService().deleteProduct(id);
     }
+    @GetMapping
+    public List<ProductModel> getProductsByCategoryAndSubcategoryOrAll(@RequestParam(required = false) String categoryCode,
+                                                             @RequestParam(required = false) String subcategoryCode) {
+        if (categoryCode != null && subcategoryCode != null) {
+            return getProductService().getProductsByCategoryAndSubcategory(categoryCode, subcategoryCode);
+        } else if (categoryCode != null) {
+            return getProductService().getProductsByCategory(categoryCode);
+        } else if (subcategoryCode != null) {
+            return getProductService().getProductsBySubcategory(subcategoryCode);
+        } else {
+            return getProductService().getAllProducts();
+        }
+    }
+    
 
 
 

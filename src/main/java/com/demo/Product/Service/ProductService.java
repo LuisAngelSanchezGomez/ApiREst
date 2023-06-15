@@ -17,4 +17,9 @@ public interface ProductService {
     public ProductModel updateProduct(Long id, ProductModel updatedProduct);
 
     public void deleteProduct(Long id) ;
+
+    public List<ProductModel> getProductsByCategoryAndSubcategory(String categoryCode, String subcategoryCode);
+
+    public List<ProductModel> getProductsByCategory(String categoryCode) ;
+    public List<ProductModel> getProductsBySubcategory(String subcategoryCode) ;
 }
