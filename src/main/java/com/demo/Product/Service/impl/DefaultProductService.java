@@ -1,17 +1,19 @@
 package com.demo.Product.Service.impl;
 
-import com.demo.Product.Model.CategoryModel;
+
 import com.demo.Product.Model.ProductModel;
 import com.demo.Product.Model.SubcategoryModel;
 import com.demo.Product.Repository.ProductRepository;
+import com.demo.Product.Repository.SubcategoryRepository;
 import com.demo.Product.Service.ProductService;
-import com.demo.Product.Service.impl.DefaultCategoryService;
-import com.demo.Product.Service.impl.DefaultSubcategoryService;
+
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
+
 
 
 @Service
@@ -23,22 +25,33 @@ public class DefaultProductService implements ProductService {
     private DefaultCategoryService categoryService;
     @Autowired
     private DefaultSubcategoryService subcategoryService;
+    @Autowired
+    private SubcategoryRepository subcategoryRepository;
 
-    public List<ProductModel> showProducts(){
+    @Override
+    public ProductModel getProductById(Long id) {
+        return getProductRepository().findById(id).orElse(null);
+    }
+
+    public List<ProductModel> showAllProducts(){
         return productRepository.findAll();
     }
 
-    public void saveProduct(List<ProductModel> product){
-         getProductRepository().saveAll(product);
+    public List<ProductModel> saveProduct(List<ProductModel> products){
+         List<ProductModel> createdProducts = new ArrayList<>();
+         for (ProductModel product : products ){
+             SubcategoryModel subcategoryModel = getSubcategoryRepository().findById(product.getSubcategory().getId())
+                     .orElseThrow(()->new IllegalArgumentException("Id de subcategoria invalida"));
+             product.setSubcategory(subcategoryModel);
+             createdProducts.add(getProductRepository().save(product));
+         }
+         return createdProducts;
     }
 
     public void deleteProductById(Long id){
         getProductRepository().deleteById(id);
     }
 
-    public List<ProductModel> getProductByCategoryId(long id){
-        return getProductRepository().findByCategoryId(id);
-    }
 
     public List<ProductModel> getProductByInventoryRange(int min, int max){
         return getProductRepository().findByInventoryBetween(min,max);
@@ -72,6 +85,14 @@ public class DefaultProductService implements ProductService {
 
     public void setSubcategoryService(DefaultSubcategoryService subcategoryService) {
         this.subcategoryService = subcategoryService;
+    }
+
+    public SubcategoryRepository getSubcategoryRepository() {
+        return subcategoryRepository;
+    }
+
+    public void setSubcategoryRepository(SubcategoryRepository subcategoryRepository) {
+        this.subcategoryRepository = subcategoryRepository;
     }
 }
 

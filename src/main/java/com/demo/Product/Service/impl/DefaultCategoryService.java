@@ -23,8 +23,8 @@ public class DefaultCategoryService implements CategoryService {
         return getCategoryRepository().findAll();
     }
 
-    public CategoryModel getCategoryById(long id){
-        return  getCategoryRepository().findById(id).orElseThrow(()->new RuntimeException("Categoria no encontrada"));
+    public Optional<CategoryModel> getCategoryByCode(String code){
+        return getCategoryRepository().findByCode(code);
     }
 
     public List<CategoryModel> createCategory(List<CategoryModel> categoryModel){
@@ -35,13 +35,13 @@ public class DefaultCategoryService implements CategoryService {
         return createdCategories;
     }
 
-    public Optional<CategoryModel> updateCategory(long id){
-        return getCategoryRepository().findById(id);
+    public Optional<CategoryModel> updateCategory(String code){
+        return getCategoryRepository().findByCode(code);
     }
 
-    public ResponseEntity<Void> deleteCategoryById(long id){
+    public ResponseEntity<Void> deleteCategoryByCode(String code){
         try {
-            Optional<CategoryModel> categoryModel=getCategoryRepository().findById(id);
+            Optional<CategoryModel> categoryModel=getCategoryRepository().findByCode(code);
             if (categoryModel.isPresent()){
                 getCategoryRepository().delete(categoryModel.get());
                 return ResponseEntity.noContent().build();

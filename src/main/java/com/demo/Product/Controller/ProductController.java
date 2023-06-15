@@ -14,7 +14,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/productos")
+@RequestMapping("/api/productos")
 public class ProductController {
 
     @Autowired
@@ -28,12 +28,26 @@ public class ProductController {
 
     @GetMapping
     public List<ProductModel> getAllProducts() {
-        return getProductService().showProducts();
+        return getProductService().showAllProducts();
     }
 
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductModel> getProduct(@PathVariable Long id) {
+        ProductModel product = productService.getProductById(id);
+        if (product != null) {
+            return ResponseEntity.ok(product);
+        } else {
+            return ResponseEntity.notFound().build();
+        }
+    }
     @PostMapping
-    public void createProduct(@RequestBody List<ProductModel> product) {
-        getProductService().saveProduct(product);
+    public ResponseEntity createProducts(@RequestBody List<ProductModel> product) {
+        try {
+            List<ProductModel> createdProducts = getProductService().saveProduct(product);
+            return ResponseEntity.ok(createdProducts);
+        }catch (Exception e){
+            return ResponseEntity.badRequest().build();
+        }
     }
 
     @PutMapping("/{id}")
@@ -46,7 +60,7 @@ public class ProductController {
                 product.setName(productData.getName());
                 product.setMaterialNumber(productData.getMaterialNumber());
                 product.setInventory(productData.getInventory());
-                product.setCategory(productData.getCategory());
+
                 getProductRepository().save(product);
                 return ResponseEntity.ok(product);
             } catch (Exception e) {
@@ -64,10 +78,10 @@ public class ProductController {
 
 
 
-    @GetMapping("/categorias/{id}")
+    /*@GetMapping("/categorias/{id}")
     public List<ProductModel> getProductsByCategory(@PathVariable Long id) {
         return getProductService().getProductByCategoryId(id);
-    }
+    }*/
 
     @GetMapping(params = {"min","max"})
     public List<ProductModel> getProductByInventoryRange(@RequestParam("min") int min, @RequestParam("max") int max){

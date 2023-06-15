@@ -12,7 +12,7 @@ import java.util.List;
 import java.util.Optional;
 
 @RestController
-@RequestMapping("/categorias")
+@RequestMapping("/api/categorias")
 public class CategoryController {
 
     @Autowired
@@ -25,9 +25,9 @@ public class CategoryController {
         return getCategoryService().getAllCategories();
     }
 
-    @GetMapping("/{categoryId}")
-    public CategoryModel getCategoryById(@PathVariable Long categoryId){
-        return getCategoryService().getCategoryById(categoryId);
+    @GetMapping("/{categoryCode}")
+    public Optional<CategoryModel> getCategoryByCode(@PathVariable String categoryCode){
+        return getCategoryService().getCategoryByCode(categoryCode);
     }
 
     @PostMapping
@@ -40,10 +40,10 @@ public class CategoryController {
         }
     }
 
-    @PutMapping("/{categoryId}")
-    public ResponseEntity<CategoryModel> updateCategory(@PathVariable Long categoryId, @RequestBody CategoryModel categoryData){
+    @PutMapping("/{categoryCode}")
+    public ResponseEntity<CategoryModel> updateCategory(@PathVariable String categoryCode, @RequestBody CategoryModel categoryData){
         try {
-            Optional<CategoryModel> optionalCategoryModel= getCategoryService().updateCategory(categoryId);
+            Optional<CategoryModel> optionalCategoryModel= getCategoryService().updateCategory(categoryCode);
             if (optionalCategoryModel.isPresent()){
                 CategoryModel categoryModel = optionalCategoryModel.get();
                 categoryModel.setName(categoryData.getName());
@@ -58,9 +58,9 @@ public class CategoryController {
         }
     }
 
-    @DeleteMapping("/{categoryId}")
-    public  ResponseEntity<Void> deleteCategoryById(@PathVariable long categoryId){
-        return getCategoryService().deleteCategoryById(categoryId);
+    @DeleteMapping("/{categoryCode}")
+    public  ResponseEntity<Void> deleteCategoryByCode(@PathVariable String categoryCode){
+        return getCategoryService().deleteCategoryByCode(categoryCode);
     }
     @DeleteMapping()
     public  ResponseEntity<Void> deleteAllCategories(){

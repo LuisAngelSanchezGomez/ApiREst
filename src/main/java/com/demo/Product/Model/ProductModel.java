@@ -9,26 +9,25 @@ public class ProductModel {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+    @Column(name = "sku", nullable = false)
     private String sku;
+    @Column(name = "name", nullable = false)
     private String name;
 
+    @Column(nullable = false)
     private String materialNumber;
-
-    @ManyToOne
-    @JoinColumn(name = "category_id")
-    private CategoryModel category;
     @ManyToOne
     @JoinColumn(name = "subcategory_id")
     private SubcategoryModel subcategory;
 
+    @Column(name = "inventory", nullable = false)
     private int inventory;
 
-    public ProductModel(Long id, String sku, String name, String materialNumber, CategoryModel category, SubcategoryModel subcategory, int inventory) {
+    public ProductModel(Long id, String sku, String name, String materialNumber, SubcategoryModel subcategory, int inventory) {
         this.id = id;
         this.sku = sku;
         this.name = name;
         this.materialNumber = materialNumber;
-        this.category = category;
         this.subcategory = subcategory;
         this.inventory = inventory;
     }
@@ -61,13 +60,6 @@ public class ProductModel {
         this.materialNumber = materialNumber;
     }
 
-    public CategoryModel getCategory() {
-        return category;
-    }
-
-    public void setCategory(CategoryModel category) {
-        this.category = category;
-    }
 
     public int getInventory() {
         return inventory;
@@ -92,4 +84,5 @@ public class ProductModel {
     public void setSubcategory(SubcategoryModel subcategoryModel) {
         this.subcategory = subcategoryModel;
     }
+
 }

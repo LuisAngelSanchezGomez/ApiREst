@@ -9,15 +9,15 @@ import java.util.Optional;
 
 public interface CategoryService {
     public List<CategoryModel> createCategory(List<CategoryModel> categoryModel);
-    public Optional<CategoryModel> updateCategory(long id);
+    public Optional<CategoryModel> updateCategory(String code);
 
-    public ResponseEntity<Void> deleteCategoryById(long id);
+    public ResponseEntity<Void> deleteCategoryByCode(String code);
     public ResponseEntity<Void> deleteCategory();
 
 
     public List<CategoryModel> getAllCategories();
 
-    public CategoryModel getCategoryById(long id);
+    public Optional<CategoryModel> getCategoryByCode(String code);
 
 
 
