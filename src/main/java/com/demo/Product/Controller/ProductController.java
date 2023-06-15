@@ -69,14 +69,12 @@ public class ProductController {
             return getProductService().getAllProducts();
         }
     }
-    
-
-
-
-    @GetMapping(params = {"min","max"})
-    public List<ProductModel> getProductByInventoryRange(@RequestParam("min") int min, @RequestParam("max") int max){
-        return null;
+    @GetMapping("/inventory-range")
+    public List<ProductModel> getProductsByInventoryRange(@RequestParam int minInventory, @RequestParam int maxInventory) {
+        return getProductService().getProductsByInventoryRange(minInventory, maxInventory);
     }
+
+
 
     public DefaultProductService getProductService() {
         return productService;

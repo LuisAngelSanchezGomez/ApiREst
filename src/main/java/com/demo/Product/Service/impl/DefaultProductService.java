@@ -92,6 +92,11 @@ public class DefaultProductService implements ProductService {
         return getProductRepository().findBySubcategoryCode(subcategoryCode);
     }
 
+    @Override
+    public List<ProductModel> getProductsByInventoryRange(int minInventory, int maxInventory) {
+        return getProductRepository().findByInventoryBetween(minInventory,maxInventory);
+    }
+
     public ProductRepository getProductRepository() {
         return productRepository;
     }

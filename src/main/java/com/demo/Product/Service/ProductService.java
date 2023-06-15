@@ -22,4 +22,6 @@ public interface ProductService {
 
     public List<ProductModel> getProductsByCategory(String categoryCode) ;
     public List<ProductModel> getProductsBySubcategory(String subcategoryCode) ;
+
+    public List<ProductModel> getProductsByInventoryRange(int minInventory, int maxInventory);
 }
