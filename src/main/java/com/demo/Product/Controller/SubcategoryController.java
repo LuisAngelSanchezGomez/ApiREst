@@ -42,9 +42,9 @@ public class SubcategoryController {
     }
 
     @PutMapping("/{subcategoryId}")
-    public ResponseEntity<SubcategoryModel> updateSubcategory(@PathVariable Long id, @RequestBody SubcategoryModel subcategoryData){
+    public ResponseEntity<SubcategoryModel> updateSubcategory(@PathVariable Long subcategoryId, @RequestBody SubcategoryModel subcategoryData){
         try {
-            Optional<SubcategoryModel> optionalSubcategoryModel= getSubcategoryService().updateSubcategory(id);
+            Optional<SubcategoryModel> optionalSubcategoryModel= getSubcategoryService().updateSubcategory(subcategoryId);
             if (optionalSubcategoryModel.isPresent()){
                 SubcategoryModel subcategoryModel = optionalSubcategoryModel.get();
                 subcategoryModel.setName(subcategoryData.getName());
@@ -60,8 +60,8 @@ public class SubcategoryController {
     }
 
     @DeleteMapping("/{subcategoryId}")
-    public  ResponseEntity<Void> deleteSubCategory(@PathVariable long id){
-        return getSubcategoryService().deleteSubcategoryById(id);
+    public  ResponseEntity<Void> deleteSubCategory(@PathVariable long subcategoryId){
+        return getSubcategoryService().deleteSubcategoryById(subcategoryId);
     }
 
     public SubcategoryRepository getSubcategoryRepository() {

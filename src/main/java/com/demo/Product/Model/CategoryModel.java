@@ -21,9 +21,6 @@ public class CategoryModel {
     @NotNull
     private String name;
 
-    @OneToMany(mappedBy = "category", cascade = CascadeType.ALL, orphanRemoval = true)
-    private List<SubcategoryModel> subcategories = new ArrayList<>();
-
     public CategoryModel() {
     }
 
@@ -54,23 +51,5 @@ public class CategoryModel {
 
     public void setCode(String code) {
         this.code = code;
-    }
-
-    public List<SubcategoryModel> getSubcategories() {
-        return subcategories;
-    }
-
-    public void setSubcategories(List<SubcategoryModel> subcategories) {
-        this.subcategories = subcategories;
-    }
-
-    public void addSubcategory(SubcategoryModel subcategory) {
-        subcategory.setCategory(this);
-        subcategories.add(subcategory);
-    }
-
-    public void removeSubcategory(SubcategoryModel subcategory) {
-        subcategory.setCategory(null);
-        subcategories.remove(subcategory);
     }
 }
