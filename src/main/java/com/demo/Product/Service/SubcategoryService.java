@@ -10,9 +10,9 @@ import java.util.Optional;
 public interface SubcategoryService {
 
     public List<SubcategoryModel> createSubcategories(List<SubcategoryModel> subcategories);
-    public Optional<SubcategoryModel> updateSubcategory(long id);
+    public Optional<SubcategoryModel> updateSubcategory(String code);
     public List<SubcategoryModel> getAllSubcategories();
-    public Optional<SubcategoryModel> getSubcategoryById(long id);
+    public Optional<SubcategoryModel> getSubcategoryByCode(String code);
 
-    public ResponseEntity<Void> deleteSubcategoryById(long id);
+    public ResponseEntity<Void> deleteSubcategoryByCode(String code);
 }

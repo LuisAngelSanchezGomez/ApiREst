@@ -15,7 +15,7 @@ public class SubcategoryModel {
     private String code;
 
     @ManyToOne
-    @JoinColumn(name = "category_id")
+    @JoinColumn(name = "category_code",referencedColumnName = "code")
     private CategoryModel category;
 
 

@@ -25,9 +25,9 @@ public class SubcategoryController {
         return getSubcategoryService().getAllSubcategories();
     }
 
-    @GetMapping("/{subcategoryId}")
-    public Optional<SubcategoryModel> getSubcategoryById(@PathVariable Long id){
-        return getSubcategoryService().getSubcategoryById(id);
+    @GetMapping("/{subcategoryCode}")
+    public Optional<SubcategoryModel> getSubcategoryById(@PathVariable String code){
+        return getSubcategoryService().getSubcategoryByCode(code);
     }
 
     @PostMapping
@@ -41,10 +41,10 @@ public class SubcategoryController {
 
     }
 
-    @PutMapping("/{subcategoryId}")
-    public ResponseEntity<SubcategoryModel> updateSubcategory(@PathVariable Long subcategoryId, @RequestBody SubcategoryModel subcategoryData){
+    @PutMapping("/{subcategoryCode}")
+    public ResponseEntity<SubcategoryModel> updateSubcategory(@PathVariable String subcategoryCode, @RequestBody SubcategoryModel subcategoryData){
         try {
-            Optional<SubcategoryModel> optionalSubcategoryModel= getSubcategoryService().updateSubcategory(subcategoryId);
+            Optional<SubcategoryModel> optionalSubcategoryModel= getSubcategoryService().updateSubcategory(subcategoryCode);
             if (optionalSubcategoryModel.isPresent()){
                 SubcategoryModel subcategoryModel = optionalSubcategoryModel.get();
                 subcategoryModel.setName(subcategoryData.getName());
@@ -59,9 +59,9 @@ public class SubcategoryController {
         }
     }
 
-    @DeleteMapping("/{subcategoryId}")
-    public  ResponseEntity<Void> deleteSubCategory(@PathVariable long subcategoryId){
-        return getSubcategoryService().deleteSubcategoryById(subcategoryId);
+    @DeleteMapping("/{subcategoryCode}")
+    public  ResponseEntity<Void> deleteSubCategory(@PathVariable String subcategoryCode){
+        return getSubcategoryService().deleteSubcategoryByCode(subcategoryCode);
     }
 
     public SubcategoryRepository getSubcategoryRepository() {

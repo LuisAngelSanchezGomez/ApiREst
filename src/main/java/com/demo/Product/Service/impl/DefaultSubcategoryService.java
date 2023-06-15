@@ -24,8 +24,8 @@ public class DefaultSubcategoryService implements SubcategoryService {
     public List<SubcategoryModel> getAllSubcategories(){
         return getSubcategoryRepository().findAll();
     }
-    public Optional<SubcategoryModel> getSubcategoryById(long id){
-         return getSubcategoryRepository().findById(id);
+    public Optional<SubcategoryModel> getSubcategoryByCode(String code){
+         return getSubcategoryRepository().findByCode(code);
     }
 
     @Override
@@ -37,23 +37,23 @@ public class DefaultSubcategoryService implements SubcategoryService {
         return createdSubcategories;
     }
     public SubcategoryModel createSubcategory(SubcategoryModel subcategoryModel){
-        CategoryModel categoryModel = getCategoryRepository().findById(subcategoryModel.getCategory().getId())
+        CategoryModel categoryModel = getCategoryRepository().findByCode(subcategoryModel.getCategory().getCode())
                 .orElseThrow(()-> new IllegalArgumentException("El Id de Categoria es invalido"));
-        if (!categoryModel.getId().equals(subcategoryModel.getCategory().getId())){
+        if (!categoryModel.getCode().equals(subcategoryModel.getCategory().getCode())){
             throw new IllegalArgumentException("Id de Categoria no coincide");
         }
+        subcategoryModel.setCategory(categoryModel);
         SubcategoryModel createdSubcategory = getSubcategoryRepository().save(subcategoryModel);
-        System.out.println("Subcategoria creada "+ createdSubcategory);
         return createdSubcategory;
     }
 
-    public Optional<SubcategoryModel> updateSubcategory(long id){
-        return getSubcategoryRepository().findById(id);
+    public Optional<SubcategoryModel> updateSubcategory(String code){
+        return getSubcategoryRepository().findByCode(code);
     }
 
-    public ResponseEntity<Void> deleteSubcategoryById(long id){
+    public ResponseEntity<Void> deleteSubcategoryByCode(String code){
         try {
-            Optional<SubcategoryModel> subcategoryModel=getSubcategoryRepository().findById(id);
+            Optional<SubcategoryModel> subcategoryModel=getSubcategoryRepository().findByCode(code);
             if (subcategoryModel.isPresent()){
                 getSubcategoryRepository().delete(subcategoryModel.get());
                 return ResponseEntity.noContent().build();
