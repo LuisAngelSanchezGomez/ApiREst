@@ -28,41 +28,51 @@ public class DefaultProductService implements ProductService {
     @Autowired
     private SubcategoryRepository subcategoryRepository;
 
+
+
+    @Override
+    public List<ProductModel> createProduct(List<ProductModel> products) {
+        List<ProductModel> createdProducts = new ArrayList<>();
+        for (ProductModel product : products){
+            String categoryCode = product.getSubcategory().getCode();
+            SubcategoryModel subcategoryModel = getSubcategoryRepository().findByCode(categoryCode).orElseThrow(()->new
+                    RuntimeException("Categoria no encontrada por cdigo"+ categoryCode));
+            product.setSubcategory(subcategoryModel);
+
+            ProductModel createdProduct = getProductRepository().save(product);
+            createdProducts.add(createdProduct);
+        }
+        return createdProducts;
+
+    }
+
+    @Override
+    public List<ProductModel> getAllProducts() {
+        return getProductRepository().findAll();
+    }
+
     @Override
     public ProductModel getProductById(Long id) {
-        return getProductRepository().findById(id).orElse(null);
+        return getProductRepository().findById(id).orElseThrow(()->new RuntimeException("Producto no enconrado con "+ id));
     }
 
-    public List<ProductModel> showAllProducts(){
-        return productRepository.findAll();
+    @Override
+    public ProductModel updateProduct(Long id, ProductModel updatedProduct) {
+        ProductModel productModel = getProductRepository().findById(id).orElseThrow(()->new RuntimeException("Producto no encontrado con ese codigo"));
+        productModel.setSku(updatedProduct.getSku());
+        productModel.setName(updatedProduct.getName());
+        productModel.setMaterialNumber(updatedProduct.getMaterialNumber());
+        productModel.setSubcategory(updatedProduct.getSubcategory());
+        productModel.setInventory(updatedProduct.getInventory());
+
+        return getProductRepository().save(productModel);
     }
 
-    public List<ProductModel> saveProduct(List<ProductModel> products){
-         List<ProductModel> createdProducts = new ArrayList<>();
-         for (ProductModel product : products ){
-             SubcategoryModel subcategoryModel = getSubcategoryRepository().findById(product.getSubcategory().getId())
-                     .orElseThrow(()->new IllegalArgumentException("Id de subcategoria invalida"));
-             product.setSubcategory(subcategoryModel);
-             createdProducts.add(getProductRepository().save(product));
-         }
-         return createdProducts;
-    }
-
-    public void deleteProductById(Long id){
+    @Override
+    public void deleteProduct(Long id) {
         getProductRepository().deleteById(id);
+
     }
-
-
-    public List<ProductModel> getProductByInventoryRange(int min, int max){
-        return getProductRepository().findByInventoryBetween(min,max);
-    }
-
-   /* public List<ProductModel> getProductsByCategoryAndSubcategory(long categoryId, long subcategoryId){
-        Optional<CategoryModel> category = getCategoryService().getCategoryById(categoryId);
-        Optional<SubcategoryModel> subcategoryModel = getSubcategoryService().getSubcategoryById(subcategoryId);
-
-        return getProductRepository().findByCategoryAndSubcategoryId(category.get(),subcategoryModel.get());
-    }*/
     public ProductRepository getProductRepository() {
         return productRepository;
     }
@@ -94,5 +104,6 @@ public class DefaultProductService implements ProductService {
     public void setSubcategoryRepository(SubcategoryRepository subcategoryRepository) {
         this.subcategoryRepository = subcategoryRepository;
     }
+
 }
 

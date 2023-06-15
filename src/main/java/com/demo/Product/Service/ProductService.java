@@ -8,17 +8,13 @@ import java.util.List;
 import java.util.Optional;
 
 public interface ProductService {
+    public List<ProductModel> createProduct(List<ProductModel> product);
+
+    public List<ProductModel> getAllProducts();
 
     public ProductModel getProductById(Long id);
-    public List<ProductModel> showAllProducts();
 
-    public List<ProductModel> saveProduct(List<ProductModel> products);
+    public ProductModel updateProduct(Long id, ProductModel updatedProduct);
 
-    public void deleteProductById(Long id);
-
-
-
-
-    public List<ProductModel> getProductByInventoryRange(int min, int max);
-    /*public List<ProductModel> getProductsByCategoryAndSubcategory(long categoryId, long subcategoryId);*/
+    public void deleteProduct(Long id) ;
 }

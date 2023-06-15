@@ -26,74 +26,49 @@ public class ProductController {
     @Autowired
     private ProductRepository productRepository;
 
-    @GetMapping
-    public List<ProductModel> getAllProducts() {
-        return getProductService().showAllProducts();
-    }
-
-    @GetMapping("/{id}")
-    public ResponseEntity<ProductModel> getProduct(@PathVariable Long id) {
-        ProductModel product = productService.getProductById(id);
-        if (product != null) {
-            return ResponseEntity.ok(product);
-        } else {
-            return ResponseEntity.notFound().build();
-        }
-    }
     @PostMapping
     public ResponseEntity createProducts(@RequestBody List<ProductModel> product) {
         try {
-            List<ProductModel> createdProducts = getProductService().saveProduct(product);
+            List<ProductModel> createdProducts = getProductService().createProduct(product);
             return ResponseEntity.ok(createdProducts);
         }catch (Exception e){
             return ResponseEntity.badRequest().build();
         }
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<ProductModel> updateProduct(@PathVariable Long id, @RequestBody ProductModel productData) {
-        Optional<ProductModel> optionalProductModel = getProductRepository().findById(id);
-        if (optionalProductModel.isPresent()) {
-            try {
-                ProductModel product = optionalProductModel.get();
-                product.setSku(productData.getSku());
-                product.setName(productData.getName());
-                product.setMaterialNumber(productData.getMaterialNumber());
-                product.setInventory(productData.getInventory());
+    @GetMapping
+    public List<ProductModel> getAllProducts() {
+        return getProductService().getAllProducts();
+    }
 
-                getProductRepository().save(product);
-                return ResponseEntity.ok(product);
-            } catch (Exception e) {
-                return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
-            }
+    @GetMapping("/{id}")
+    public ResponseEntity<ProductModel> getProduct(@PathVariable Long id) {
+        ProductModel product = getProductService().getProductById(id);
+        if (product != null) {
+            return ResponseEntity.ok(product);
         } else {
             return ResponseEntity.notFound().build();
         }
     }
 
+
+    @PutMapping("/{id}")
+    public ProductModel updateProduct(@PathVariable Long id, @RequestBody ProductModel updatedProduct) {
+        return getProductService().updateProduct(id,updatedProduct);
+    }
+
     @DeleteMapping("/{id}")
     public void deleteProduct(@PathVariable Long id){
-        getProductService().deleteProductById(id);
+        getProductService().deleteProduct(id);
     }
 
 
-
-    /*@GetMapping("/categorias/{id}")
-    public List<ProductModel> getProductsByCategory(@PathVariable Long id) {
-        return getProductService().getProductByCategoryId(id);
-    }*/
 
     @GetMapping(params = {"min","max"})
     public List<ProductModel> getProductByInventoryRange(@RequestParam("min") int min, @RequestParam("max") int max){
-        return getProductService().getProductByInventoryRange(min,max);
+        return null;
     }
 
-    /*@GetMapping("/categorias/{categoryId}/subcategorias/{subcategoryId}")
-    public List<ProductModel> getProductsByCategoryAndSubcategory(@PathVariable Long categoryId, @PathVariable Long subcategoryId) {
-
-        return getProductService().getProductsByCategoryAndSubcategory(categoryId,subcategoryId);
-    }
-*/
     public DefaultProductService getProductService() {
         return productService;
     }

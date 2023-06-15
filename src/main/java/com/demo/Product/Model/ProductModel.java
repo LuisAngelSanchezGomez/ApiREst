@@ -17,7 +17,7 @@ public class ProductModel {
     @Column(nullable = false)
     private String materialNumber;
     @ManyToOne
-    @JoinColumn(name = "subcategory_id")
+    @JoinColumn(name = "category_code")
     private SubcategoryModel subcategory;
 
     @Column(name = "inventory", nullable = false)
